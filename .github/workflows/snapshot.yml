@@ -1,0 +1,66 @@
+name: Parcel snapshot
+
+on:
+  schedule:
+    - cron: "30 11 * * *"   # daily, 7:30 a.m. Miami time (EDT)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Take a snapshot even if the county layer has not changed
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: parcel-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Download the database
+        run: |
+          mkdir -p state
+          if gh release view database >/dev/null 2>&1; then
+            gh release download database --pattern parcels.db.gz --dir state
+            gunzip state/parcels.db.gz
+          else
+            echo "No database release yet; this run takes the first snapshot."
+          fi
+
+      - name: Snapshot and diff
+        run: python -m tracker.run --db state/parcels.db ${{ inputs.force && '--force' || '' }}
+
+      - name: Commit map data
+        run: |
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "No new map data."
+          else
+            git -c user.name="parcel-tracker" -c user.email="actions@users.noreply.github.com" \
+              commit -m "Parcel snapshot $(jq -r '.[-1].date' docs/data/runs.json)"
+            git push
+          fi
+
+      - name: Upload the database
+        run: |
+          [ -f state/parcels.db ] || exit 0
+          gzip -kf state/parcels.db
+          gh release view database >/dev/null 2>&1 || \
+            gh release create database --title "Parcel database" \
+              --notes "SQLite database of parcel snapshots and change history. Replaced by each daily run."
+          gh release upload database state/parcels.db.gz --clobber

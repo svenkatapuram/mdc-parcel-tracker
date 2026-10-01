@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miami-Dade Parcel Changes</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <header class="card" id="header">
+    <h1>Miami-Dade Parcel Changes</h1>
+    <p id="summary">Loading…</p>
+    <div class="basemaps" role="group" aria-label="Base map">
+      <button data-base="dark" class="on">Dark</button>
+      <button data-base="satellite">Satellite</button>
+    </div>
+  </header>
+
+  <aside class="card hidden" id="panel" aria-live="polite">
+    <button id="panel-close" aria-label="Close">×</button>
+    <div id="panel-body"></div>
+  </aside>
+
+  <footer class="card" id="timeline">
+    <div class="row">
+      <button id="play" aria-label="Play">▶</button>
+      <div class="slider-wrap">
+        <input type="range" id="slider" min="0" max="0" value="0" step="1" aria-label="Date">
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div id="date-label">–</div>
+    </div>
+    <div class="row controls">
+      <label class="toggle"><input type="checkbox" id="cumulative"> Show everything up to this date</label>
+      <div id="legend"></div>
+    </div>
+    <p id="day-stats"></p>
+  </footer>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
