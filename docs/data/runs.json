@@ -9,5 +9,16 @@
   "mapped": 0,
   "bulk": {},
   "baseline": true
+ },
+ {
+  "date": "2026-10-06",
+  "source_edit_ms": 1791257910000,
+  "ran_at": "2026-10-06T17:25:45+00:00",
+  "parcels": 586339,
+  "changes": 5206,
+  "parcels_changed": 2207,
+  "mapped": 2187,
+  "bulk": {},
+  "baseline": false
  }
 ]
