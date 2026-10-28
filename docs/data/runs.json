@@ -42,5 +42,19 @@
   "mapped": 920,
   "bulk": {},
   "baseline": false
+ },
+ {
+  "date": "2026-10-27",
+  "source_edit_ms": 1793124315234,
+  "ran_at": "2026-10-28T17:22:45+00:00",
+  "parcels": 586280,
+  "changes": 1094133,
+  "parcels_changed": 586159,
+  "mapped": 2166,
+  "bulk": {
+   "ASSESSMENT_YEAR_CUR": 586144,
+   "ASSESSED_VAL_CUR": 500852
+  },
+  "baseline": false
  }
 ]
