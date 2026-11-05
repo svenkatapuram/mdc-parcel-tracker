@@ -67,5 +67,16 @@
   "mapped": 0,
   "bulk": {},
   "baseline": false
+ },
+ {
+  "date": "2026-11-05",
+  "source_edit_ms": 1793841701473,
+  "ran_at": "2026-11-05T19:00:05+00:00",
+  "parcels": 586282,
+  "changes": 17550,
+  "parcels_changed": 7874,
+  "mapped": 7871,
+  "bulk": {},
+  "baseline": false
  }
 ]
